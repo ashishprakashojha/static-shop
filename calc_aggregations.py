@@ -1,0 +1,39 @@
+import json
+
+products = [
+  {"id": "prod-57d94299-001", "name": "Elite Item 1", "category": "electronics", "price": 440.44, "stock": 110, "rating": 2.6},
+  {"id": "prod-57d94299-002", "name": "Standard Item 2", "category": "clothing", "price": 95.06, "stock": 2, "rating": 1.6},
+  {"id": "prod-57d94299-003", "name": "Elite Item 3", "category": "home", "price": 72.88, "stock": 184, "rating": 2.4},
+  {"id": "prod-57d94299-004", "name": "Pro Item 4", "category": "electronics", "price": 297.67, "stock": 86, "rating": 4.3},
+  {"id": "prod-57d94299-005", "name": "Standard Item 5", "category": "home", "price": 173.71, "stock": 142, "rating": 3.2},
+  {"id": "prod-57d94299-006", "name": "Standard Item 6", "category": "electronics", "price": 116.16, "stock": 61, "rating": 1.8},
+  {"id": "prod-57d94299-007", "name": "Standard Item 7", "category": "clothing", "price": 200.05, "stock": 96, "rating": 4.6},
+  {"id": "prod-57d94299-008", "name": "Pro Item 8", "category": "clothing", "price": 91.9, "stock": 145, "rating": 4.1},
+  {"id": "prod-57d94299-009", "name": "Premium Item 9", "category": "clothing", "price": 11.93, "stock": 79, "rating": 1.6},
+  {"id": "prod-57d94299-010", "name": "Standard Item 10", "category": "home", "price": 57.4, "stock": 61, "rating": 2.3},
+  {"id": "prod-57d94299-011", "name": "Elite Item 11", "category": "sports", "price": 420.36, "stock": 91, "rating": 2},
+  {"id": "prod-57d94299-012", "name": "Pro Item 12", "category": "home", "price": 472.26, "stock": 133, "rating": 3.3},
+  {"id": "prod-57d94299-013", "name": "Premium Item 13", "category": "sports", "price": 447.17, "stock": 138, "rating": 3.7},
+  {"id": "prod-57d94299-014", "name": "Pro Item 14", "category": "clothing", "price": 25.88, "stock": 44, "rating": 4.3},
+  {"id": "prod-57d94299-015", "name": "Basic Item 15", "category": "sports", "price": 416.87, "stock": 25, "rating": 1.3},
+  {"id": "prod-57d94299-016", "name": "Elite Item 16", "category": "sports", "price": 51.07, "stock": 38, "rating": 2.2},
+  {"id": "prod-57d94299-017", "name": "Standard Item 17", "category": "home", "price": 284.63, "stock": 198, "rating": 3.5},
+  {"id": "prod-57d94299-018", "name": "Premium Item 18", "category": "clothing", "price": 186.05, "stock": 17, "rating": 3.6},
+  {"id": "prod-57d94299-019", "name": "Basic Item 19", "category": "electronics", "price": 387.13, "stock": 34, "rating": 5},
+  {"id": "prod-57d94299-020", "name": "Basic Item 20", "category": "home", "price": 242.18, "stock": 199, "rating": 1.1},
+  {"id": "prod-57d94299-021", "name": "Elite Item 21", "category": "sports", "price": 473.68, "stock": 170, "rating": 4.3}
+]
+
+aggregations = {}
+for p in products:
+    cat = p["category"]
+    if cat not in aggregations:
+        aggregations[cat] = {"count": 0, "inventoryValue": 0.0}
+    aggregations[cat]["count"] += 1
+    aggregations[cat]["inventoryValue"] += p["price"] * p["stock"]
+
+# Round values to 2 decimal places to match expectation
+for cat in aggregations:
+    aggregations[cat]["inventoryValue"] = round(aggregations[cat]["inventoryValue"], 2)
+
+print(json.dumps(aggregations, indent=2))
